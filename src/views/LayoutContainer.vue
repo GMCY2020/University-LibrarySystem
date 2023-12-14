@@ -127,7 +127,7 @@ const Login = () => {
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>图书管理系统 ©2023 Created by 408</el-footer>
+      <el-footer>图书管理系统 ©2023 Created by GMCY/408</el-footer>
     </el-container>
   </el-container>
 </template>
