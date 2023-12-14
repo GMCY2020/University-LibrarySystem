@@ -1,37 +1,47 @@
-# library-system
+### Oi! 请先看这！
+***
+这只是后端，没有前端的内容！
 
-This template should help get you started developing with Vue 3 in Vite.
+前端框架：Vue
+后端框架：SpringBoot
 
-## Recommended IDE Setup
+这是后端↓
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+gitee：https://gitee.com/turing-ice/dorm408-LibrarySystem
 
-## Customize configuration
+github：https://github.com/Turing158/dorm408-LibrarySystem
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+这是前端↓
 
-## Project Setup
+gitee：https://gitee.com/GMCY2020/dorm408-LibrarySystem-Vue
 
-```sh
-pnpm install
-```
+github：https://github.com/GMCY2020/dorm408-LibrarySystem-Vue
 
-### Compile and Hot-Reload for Development
+***
 
-```sh
-pnpm dev
-```
+软件：
 
-### Compile and Minify for Production
+- 建议 VSCode
 
-```sh
-pnpm build
-```
+模式：
 
-### Lint with [ESLint](https://eslint.org/)
+- 默认 *调试* 无需后端
+- 建议 关闭 *调试* , 与后端连用
 
-```sh
-pnpm lint
-```
+  修改 *src\stores\modules\deBug.js*
+  ```js
+  const isStartDebug = ref(false)
+  ```
+启动：
 
-hd
+- 请先 自行 下载 *pnpm*
+- node.js 版本 建议 18.16.0 及以上
+- 然后 执行命令
+
+  ```cmd
+  pnpm install
+  pnpm dev
+  ```
+
+说明：
+  - 编写时间仓促，冗杂代码比较多/_ \
