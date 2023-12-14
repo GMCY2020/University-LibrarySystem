@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export const useDebugStore = defineStore(
   'library-debug',
   () => {
-    const isStartDebug = ref(false)
+    const isStartDebug = ref(true)
 
     const booksList = ref([
       {
