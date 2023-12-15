@@ -9,7 +9,7 @@ export const useDebugStore = defineStore(
     const booksList = ref([
       {
         book_id: '001',
-        book_name: 'name1',
+        book_name: '列表书1',
         book_author: 'author1',
         book_publisher: 'publisher1',
         type_name: 'type_name1',
@@ -19,7 +19,7 @@ export const useDebugStore = defineStore(
       },
       {
         book_id: '002',
-        book_name: 'name2',
+        book_name: '列表书2',
         book_author: 'author2',
         book_publisher: 'publisher2',
         type_name: 'type_name2',
@@ -29,7 +29,7 @@ export const useDebugStore = defineStore(
       },
       {
         book_id: '003',
-        book_name: 'name3',
+        book_name: '列表书3',
         book_author: 'author3',
         book_publisher: 'publisher3',
         type_name: 'type_name3',
@@ -42,7 +42,7 @@ export const useDebugStore = defineStore(
     const booksBrrowList = ref([
       {
         book_id: '001',
-        book_name: 'name1',
+        book_name: '借的书1',
         book_author: 'author1',
         book_publisher: 'publisher1',
         type_name: 'type_name1',
@@ -52,7 +52,7 @@ export const useDebugStore = defineStore(
       },
       {
         book_id: '002',
-        book_name: 'name2',
+        book_name: '借的书2',
         book_author: 'author2',
         book_publisher: 'publisher2',
         type_name: 'type_name2',
@@ -62,7 +62,7 @@ export const useDebugStore = defineStore(
       },
       {
         book_id: '003',
-        book_name: 'name3',
+        book_name: '借的书3',
         book_author: 'author3',
         book_publisher: 'publisher3',
         type_name: 'type_name3',

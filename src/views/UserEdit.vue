@@ -4,6 +4,9 @@
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 
+// 组件
+import MessageBox from './compoents/MeaasgeBox.vue'
+
 // api
 import {
   getUserListService,
@@ -17,13 +20,18 @@ import { useUserStore, useDebugStore } from '@/stores'
 const userStore = useUserStore()
 const debugStore = useDebugStore()
 
-// 页面展示
+// 组件数据
+const messageBoxRef = ref()
+// 组件数据 常量
+const tableTitle = '用户管理'
+const tableTitleList = {
+  user_id: '用户id'
+  // user_permission: '权限'
+}
+
+// 组件数据 变量
 const loading = ref(false)
 const total = ref(0)
-const pagenum = ref(1)
-const onCurrentChange = (page) => {
-  getUsersList(page)
-}
 
 // 用户 获取 所有 数量 √
 const getUsersCount = async () => {
@@ -52,7 +60,6 @@ const getUsersList = async (pagenum) => {
   if (debugStore.isStartDebug) {
     setTimeout(() => {
       userStore.setUserList(debugStore.usersList)
-      ElMessage.success('获取用户成功')
       loading.value = false
     }, 1000)
     return
@@ -62,7 +69,6 @@ const getUsersList = async (pagenum) => {
   if (res.status == 200) {
     if (res.data.status == 'success') {
       userStore.setUserList(res.data.object)
-      ElMessage.success('获取用户成功')
     } else {
       ElMessage.error(res.data.status)
     }
@@ -121,8 +127,8 @@ const onUpdateUser = async () => {
       }
       return
     })
-    .catch(() => {
-      ElMessage.success('取消修改')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
@@ -156,62 +162,60 @@ const onDeleteUser = async (row) => {
         ElMessage.error('服务器错误')
       }
     })
-    .catch(() => {
-      ElMessage.success('取消删除')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
 
 const onCancel = () => {
   dialogVisible.value = false
-  ElMessage.success('取消')
 }
 </script>
 
 <template>
-  <div class="title">用户管理</div>
-  <el-table v-loading="loading" :data="userStore.userList" style="width: 100%">
-    <el-table-column label="用户名" width="150">
-      <template #default="{ row }">
-        <el-link type="primary" :underline="false">{{ row.user_id }}</el-link>
-      </template>
-    </el-table-column>
-    <el-table-column label="权限">
-      <template #default="{ row }">
-        {{ row.user_permission ? '管理员' : '普通用户' }}
-      </template>
-    </el-table-column>
-    <el-table-column label="操作" width="150">
-      <template #default="{ row }">
-        <el-button
-          :icon="Edit"
-          circle
-          plain
-          type="primary"
-          @click="onEditUser(row)"
-        ></el-button>
-        <el-button
-          :icon="Delete"
-          circle
-          plain
-          type="danger"
-          @click="onDeleteUser(row)"
-        ></el-button>
-      </template>
-      <template #empty>
-        <el-empty description="没有数据" />
-      </template>
-    </el-table-column>
-  </el-table>
-  <el-pagination
+  <!-- 组件 -->
+  <message-box
+    ref="messageBoxRef"
+    :table-title="tableTitle"
+    :loading="loading"
+    :table-title-list="tableTitleList"
+    :table-data="userStore.userList"
     :total="total"
-    v-model:current-page="pagenum"
-    layout="jumper, total, prev, pager, next"
-    background
-    @current-change="onCurrentChange"
-    style="margin-top: 20px; justify-content: flex-end"
-  />
+    @on-current-change="getUsersList"
+  >
+    <template v-slot:table-btn>
+      <el-table-column label="权限">
+        <template #default="{ row }">
+          {{ row.user_permission ? '管理员' : '普通用户' }}
+        </template>
+      </el-table-column>
 
+      <el-table-column label="操作" width="150">
+        <template #default="{ row }">
+          <el-button
+            :icon="Edit"
+            circle
+            plain
+            type="primary"
+            @click="onEditUser(row)"
+          ></el-button>
+          <el-button
+            :icon="Delete"
+            circle
+            plain
+            type="danger"
+            @click="onDeleteUser(row)"
+          ></el-button>
+        </template>
+        <template #empty>
+          <el-empty description="没有数据" />
+        </template>
+      </el-table-column>
+    </template>
+  </message-box>
+
+  <!-- 弹窗 编辑用户权限 -->
   <el-dialog v-model="dialogVisible" title="编辑用户权限" width="30%">
     <el-form>
       <el-form-item>

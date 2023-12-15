@@ -4,6 +4,9 @@
 import { Delete, Edit, Plus } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 
+// 组件
+import MessageBox from './compoents/MeaasgeBox.vue'
+
 // api
 import {
   getBooksService,
@@ -18,13 +21,24 @@ import { useBooksStore, useDebugStore } from '@/stores'
 const booksStore = useBooksStore()
 const debugStore = useDebugStore()
 
-// 页面展示
+// 组件数据
+const messageBoxRef = ref()
+// 组件数据 常量
+const tableTitle = '图书管理'
+const tableTitleList = {
+  book_id: 'ISBN',
+  book_name: '书名',
+  book_author: '作者',
+  book_publisher: '出版社',
+  type_name: '类型',
+  type_position: '存放地点',
+  book_count: '数量',
+  book_date: '时间'
+}
+
+// 组件数据 变量
 const loading = ref(false)
 const total = ref(0)
-const pagenum = ref(1)
-const onCurrentChange = (page) => {
-  getBooksList(page)
-}
 
 // 表单 校验 与 规则
 const form = ref()
@@ -90,7 +104,6 @@ const getBooksList = async (pagenum) => {
   if (debugStore.isStartDebug) {
     setTimeout(() => {
       booksStore.setBooks(debugStore.booksList)
-      ElMessage.success('获取图书成功')
       loading.value = false
     }, 500)
     return
@@ -100,7 +113,6 @@ const getBooksList = async (pagenum) => {
   if (res.status == 200) {
     if (res.data.status == 'success') {
       booksStore.setBooks(res.data.object)
-      ElMessage.success('获取图书成功')
     } else {
       ElMessage.error(res.data.status)
     }
@@ -154,8 +166,8 @@ const updateBook = async () => {
       }
       return
     })
-    .catch(() => {
-      ElMessage.success('取消修改')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
@@ -189,8 +201,8 @@ const onDeletBook = async (row) => {
       }
       return
     })
-    .catch(() => {
-      ElMessage.success('取消删除')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
@@ -198,7 +210,7 @@ const onDeletBook = async (row) => {
 const onCancel = () => {
   dialogVisible.value = false
   dialogVisibleN.value = false
-  ElMessage.success('取消')
+  // ElMessage.success('取消')
 }
 
 const dialogVisibleN = ref(false)
@@ -251,8 +263,8 @@ const onAddBook = async () => {
       }
       return
     })
-    .catch(() => {
-      ElMessage.success('取消添加')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
@@ -286,84 +298,49 @@ const disabledDate = (time) => {
 </script>
 
 <template>
-  <div class="edit-title title">
-    <div></div>
-    <div>图书管理</div>
-
-    <div class="btn-box">
-      <el-button :icon="Plus" plain type="primary" @click="onShow()"
-        >添加图书</el-button
-      >
-    </div>
-  </div>
-  <el-table v-loading="loading" :data="booksStore.books" style="width: 100%">
-    <el-table-column label="ISBN" prop="book_id"></el-table-column>
-    <el-table-column label="书名">
-      <template #default="{ row }">
-        <el-link type="primary" :underline="false">{{ row.book_name }}</el-link>
-      </template>
-    </el-table-column>
-    <el-table-column label="作者" prop="book_author"></el-table-column>
-    <el-table-column label="出版社" prop="book_publisher"> </el-table-column>
-    <el-table-column label="类型" prop="type_name"> </el-table-column>
-    <el-table-column label="存放地点" prop="type_position"> </el-table-column>
-    <el-table-column label="数量" prop="book_count"></el-table-column>
-    <el-table-column label="入库时间" prop="book_date"></el-table-column>
-    <el-table-column label="操作" width="100px">
-      <template #default="{ row }">
-        <el-button
-          :icon="Edit"
-          circle
-          plain
-          type="primary"
-          @click="onEditBook(row)"
-        ></el-button>
-        <el-button
-          :icon="Delete"
-          circle
-          plain
-          type="danger"
-          @click="onDeletBook(row)"
-        ></el-button>
-      </template>
-      <template #empty>
-        <el-empty description="没有数据" />
-      </template>
-    </el-table-column>
-  </el-table>
-
-  <el-pagination
+  <!-- 组件 -->
+  <message-box
+    ref="messageBoxRef"
+    :table-title="tableTitle"
+    :loading="loading"
+    :table-title-list="tableTitleList"
+    :table-data="booksStore.books"
     :total="total"
-    v-model:current-page="pagenum"
-    layout="jumper, total, prev, pager, next"
-    background
-    @current-change="onCurrentChange"
-    style="margin-top: 20px; justify-content: flex-end"
-  />
-
-  <el-dialog v-model="dialogVisible" title="编辑图书" width="30%">
-    <el-form ref="form" :model="book" :rules="rules">
-      <el-form-item prop="book_name">
-        <el-input v-model="book.book_name" placeholder="书名"></el-input>
-      </el-form-item>
-      <el-form-item prop="book_author">
-        <el-input v-model="book.book_author" placeholder="作者"></el-input>
-      </el-form-item>
-      <el-form-item prop="book_publisher">
-        <el-input v-model="book.book_publisher" placeholder="出版社"></el-input>
-      </el-form-item>
-      <el-form-item prop="book_count">
-        <el-input v-model="book.book_count" placeholder="数量"></el-input>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="onCancel">取消</el-button>
-        <el-button type="primary" @click="updateBook"> 修改 </el-button>
-      </span>
+    @on-current-change="getBooksList"
+  >
+    <template v-slot:title-btn>
+      <div class="btn-box">
+        <el-button :icon="Plus" plain type="primary" @click="onShow()"
+          >添加图书</el-button
+        >
+      </div>
     </template>
-  </el-dialog>
+    <template v-slot:table-btn>
+      <el-table-column label="操作" width="100px">
+        <template #default="{ row }">
+          <el-button
+            :icon="Edit"
+            circle
+            plain
+            type="primary"
+            @click="onEditBook(row)"
+          ></el-button>
+          <el-button
+            :icon="Delete"
+            circle
+            plain
+            type="danger"
+            @click="onDeletBook(row)"
+          ></el-button>
+        </template>
+        <template #empty>
+          <el-empty description="没有数据" />
+        </template>
+      </el-table-column>
+    </template>
+  </message-box>
 
+  <!-- 弹窗 添加图书 -->
   <el-dialog v-model="dialogVisibleN" title="添加图书" width="30%">
     <el-form ref="form" :model="bookN" :rules="rules">
       <el-form-item prop="book_id">
@@ -422,6 +399,30 @@ const disabledDate = (time) => {
       <span class="dialog-footer">
         <el-button @click="onCancel">取消</el-button>
         <el-button type="primary" @click="onAddBook"> 添加 </el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <!-- 弹窗 编辑图书 -->
+  <el-dialog v-model="dialogVisible" title="编辑图书" width="30%">
+    <el-form ref="form" :model="book" :rules="rules">
+      <el-form-item prop="book_name">
+        <el-input v-model="book.book_name" placeholder="书名"></el-input>
+      </el-form-item>
+      <el-form-item prop="book_author">
+        <el-input v-model="book.book_author" placeholder="作者"></el-input>
+      </el-form-item>
+      <el-form-item prop="book_publisher">
+        <el-input v-model="book.book_publisher" placeholder="出版社"></el-input>
+      </el-form-item>
+      <el-form-item prop="book_count">
+        <el-input v-model="book.book_count" placeholder="数量"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="onCancel">取消</el-button>
+        <el-button type="primary" @click="updateBook"> 修改 </el-button>
       </span>
     </template>
   </el-dialog>

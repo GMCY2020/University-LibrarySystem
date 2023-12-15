@@ -23,12 +23,11 @@ const outLogin = async () => {
     .then(() => {
       userStore.setIsLogin(false)
       userStore.setUser({})
-      ElMessage.success('退出成功')
       router.push('/login')
       return
     })
-    .catch(() => {
-      ElMessage.success('取消退出')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
