@@ -7,7 +7,7 @@ import zh from 'element-plus/es/locale/lang/zh-cn.mjs'
   </el-config-provider>
 </template>
 
-<style>
+<style lang="scss">
 body,
 html,
 router-view {
@@ -17,22 +17,32 @@ router-view {
   user-select: none;
 }
 
+body,
+html {
+  min-width: 800px;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
 
-.title {
+.title-box {
   width: 100%;
   height: 60px;
 
   font-size: 25px;
   color: #232323;
-  font-weight: bolder;
+  // font-weight: bolder;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
+
+  .title-name,
+  .title-btn {
+    margin: 10px;
+  }
 }
 
 body {

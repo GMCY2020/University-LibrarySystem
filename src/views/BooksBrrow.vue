@@ -1,8 +1,11 @@
 <!-- 借书 -->
 <script setup>
 // 基本
-import { Plus } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+
+// 组件
+import MessageBox from './compoents/MeaasgeBox.vue'
 
 // api
 import {
@@ -17,13 +20,24 @@ const debugStore = useDebugStore()
 const userStore = useUserStore()
 const booksStore = useBooksStore()
 
-// 页面展示
+// 组件数据
+const messageBoxRef = ref()
+// 组件数据 常量
+const tableTitle = '图书列表'
+const tableTitleList = {
+  book_id: 'ISBN',
+  book_name: '书名',
+  book_author: '作者',
+  book_publisher: '出版社',
+  type_name: '类型',
+  type_position: '存放地点',
+  book_count: '数量',
+  book_date: '时间'
+}
+
+// 组件数据 变量
 const loading = ref(false)
 const total = ref(0)
-const pagenum = ref(1)
-const onCurrentChange = (page) => {
-  getBooksList(page)
-}
 
 // 书 获取 所有 数量 √
 const getBooksCount = async () => {
@@ -52,7 +66,6 @@ const getBooksList = async (pagenum) => {
   if (debugStore.isStartDebug) {
     setTimeout(() => {
       booksStore.setBooks(debugStore.booksList)
-      ElMessage.success('获取图书成功')
       loading.value = false
     }, 500)
     return
@@ -62,7 +75,6 @@ const getBooksList = async (pagenum) => {
   if (res.status == 200) {
     if (res.data.status == 'success') {
       booksStore.setBooks(res.data.object)
-      ElMessage.success('获取图书成功')
     } else {
       ElMessage.error(res.data.status)
     }
@@ -108,51 +120,36 @@ const onBrrowBook = async (row) => {
       }
       return
     })
-    .catch(() => {
-      ElMessage.success('取消借书')
+    .catch((e) => {
+      console.log(e)
       return
     })
 }
 </script>
 
 <template>
-  <div class="title">图书列表</div>
-  <el-table v-loading="loading" :data="booksStore.books" style="width: 100%">
-    <el-table-column label="ISBN" prop="book_id"></el-table-column>
-    <el-table-column label="书名">
-      <template #default="{ row }">
-        <el-link type="primary" :underline="false">{{ row.book_name }}</el-link>
-      </template>
-    </el-table-column>
-    <el-table-column label="作者" prop="book_author"></el-table-column>
-    <el-table-column label="出版社" prop="book_publisher"> </el-table-column>
-    <el-table-column label="类型" prop="type_name"> </el-table-column>
-    <el-table-column label="存放地点" prop="type_position"> </el-table-column>
-    <el-table-column label="数量" prop="book_count"></el-table-column>
-    <el-table-column label="入库时间" prop="book_date"></el-table-column>
-    <el-table-column label="借书">
-      <template #default="{ row }">
-        <el-button
-          :icon="Plus"
-          circle
-          plain
-          type="primary"
-          @click="onBrrowBook(row)"
-        ></el-button>
-      </template>
-      <template #empty>
-        <el-empty description="没有数据" />
-      </template>
-    </el-table-column>
-  </el-table>
-
-  <el-pagination
+  <!-- 组件 -->
+  <message-box
+    ref="messageBoxRef"
+    :table-title="tableTitle"
+    :loading="loading"
+    :table-title-list="tableTitleList"
+    :table-data="booksStore.books"
     :total="total"
-    v-model:current-page="pagenum"
-    layout="jumper, total, prev, pager, next"
-    background
-    @current-change="onCurrentChange"
-    style="margin-top: 20px; justify-content: flex-end"
-  />
+    @on-current-change="getBooksList"
+  >
+    <template v-slot:table-btn>
+      <el-table-column label="借书">
+        <template #default="{ row }">
+          <el-button
+            :icon="Plus"
+            circle
+            plain
+            type="primary"
+            @click="onBrrowBook(row)"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </template>
+  </message-box>
 </template>
-<style scoped></style>
