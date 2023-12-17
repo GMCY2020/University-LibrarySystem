@@ -11,19 +11,19 @@
 
 背景
 
-- 实训周项目作业 -> 小组完成一个项目
+- 实训周项目作业: 小组完成一个项目
 
 - 前后分离开发, 该部分项目是前端项目
 
 前端
 
-- 前端框架：`Vue3`
+- 前端框架: `Vue3`
 
 - 前端项目: [gitee](https://gitee.com/GMCY2020/dorm408-LibrarySystem-Vue) \ [github](https://github.com/GMCY2020/dorm408-LibrarySystem-Vue)
 
 后端
 
-- 后端框架：SpringBoot
+- 后端框架: `SpringBoot`
 
 - 后端项目: [gitee](https://gitee.com/turing-ice/dorm408-LibrarySystem
 ) \ [github](https://github.com/Turing158/dorm408-LibrarySystem)
