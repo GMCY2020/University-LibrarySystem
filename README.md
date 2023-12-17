@@ -56,10 +56,10 @@
 ## 4. 使用
 
 下载依赖
-```cmd
+```sh
 pnpm install
 ```
 启动
-```
+```sh
 pnpm dev
 ```
