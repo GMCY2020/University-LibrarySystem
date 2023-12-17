@@ -1,50 +1,65 @@
-## 图书管理系统
+# 图书管理系统
 
-### Oi! 请先看这！
-***
-这只是后端，没有前端的内容！
+## 1. 基本信息
 
-前端框架：Vue
+- 作者: GMCY
+- 系列: 大学课程作业
+- 话题(GitHub): []
+- 创建时间: 2023/12/11
 
-后端框架：SpringBoot
+## 2. 介绍
 
-这是后端↓
+背景
 
-gitee：https://gitee.com/turing-ice/dorm408-LibrarySystem
+- 实训周项目作业 -> 小组完成一个项目
 
-github：https://github.com/Turing158/dorm408-LibrarySystem
+- 前后分离开发, 该部分项目是前端项目
 
-这是前端↓
+前端
 
-gitee：https://gitee.com/GMCY2020/dorm408-LibrarySystem-Vue
+- 前端框架：`Vue3`
 
-github：https://github.com/GMCY2020/dorm408-LibrarySystem-Vue
+- 前端项目: [gitee](https://gitee.com/GMCY2020/dorm408-LibrarySystem-Vue) \ [github](https://github.com/GMCY2020/dorm408-LibrarySystem-Vue)
 
-***
+后端
 
-软件：
+- 后端框架：SpringBoot
 
-- 建议 VSCode
+- 后端项目: [gitee](https://gitee.com/turing-ice/dorm408-LibrarySystem
+) \ [github](https://github.com/Turing158/dorm408-LibrarySystem)
 
-模式：
+说明
 
-- 默认 *调试* 无需后端
-- 建议 关闭 *调试* , 与后端连用
+- 编写时间仓促，冗杂代码比较多/_ \
 
-  修改 *src\stores\modules\deBug.js*
+## 3. 环境
+
+编辑器
+- `VSCode`
+
+依赖
+- `node.js` >= 18.16.0
+- `npm`
+- `pnpm`
+
+框架
+- `vue3`
+
+模式
+- 默认 `调试` , 无需后端
+- 建议 关闭 `调试` , 与后端连用
+
+  修改 `src\stores\modules\deBug.js`
   ```js
   const isStartDebug = ref(false)
   ```
-启动：
+## 4. 使用
 
-- 请先 自行 下载 *pnpm*
-- node.js 版本 建议 18.16.0 及以上
-- 然后 执行命令
-
-  ```cmd
-  pnpm install
-  pnpm dev
-  ```
-
-说明：
-  - 编写时间仓促，冗杂代码比较多/_ \
+下载依赖
+```cmd
+pnpm install
+```
+启动
+```
+pnpm dev
+```
