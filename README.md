@@ -4,6 +4,7 @@
 
 - 作者: GMCY
 - 系列: 大学课程作业
+- 仓库: [GitHub](https://github.com/GMCY2020/University-LibrarySystem) | [Gitee](https://gitee.com/GMCY2020/University-LibrarySystem)
 - 话题(GitHub): [vue](https://github.com/topics/vue) \ [university-coursework](https://github.com/topics/university-coursework) \ [vue3](https://github.com/topics/vue3)
 - 创建时间: 2023/12/11
 
