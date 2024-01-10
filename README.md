@@ -64,3 +64,31 @@ pnpm install
 ```sh
 pnpm dev
 ```
+
+## 5. 效果图
+
+首页
+![首页](docs/md-01.png)
+
+登录注册
+![登录](docs/md-02.png)
+![注册](docs/md-03.png)
+
+图书列表
+![图书列表](docs/md-04.png)
+![图书列表-借书](docs/md-05.png)
+
+我借的书
+![我借的书](docs/md-06.png)
+![我借的书-还书](docs/md-07.png)
+
+图书管理
+![图书管理](docs/md-08.png)
+![图书管理-添加图书](docs/md-09.png)
+![图书管理-编辑图书](docs/md-10.png)
+![图书管理-删除图书](docs/md-11.png)
+
+用户管理
+![用户管理](docs/md-12.png)
+![用户管理-编辑用户](docs/md-13.png)
+![用户管理-删除用户](docs/md-14.png)
